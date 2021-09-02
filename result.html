@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Archive</title>
+    <link rel="shortcut icon" href="img/554106-M.jpg" type="image/x-icon">
 
 
     <!-- font awosome -->
@@ -19,13 +20,51 @@
         .fa-search:hover {
             color: orange;
         }
+
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            border-right: 4px solid #3498db;
+            border-bottom: 4px solid #3498db;
+
+            left: 280px;
+            top: 5px;
+            width: 30px;
+            height: 30px;
+            -webkit-animation: spin 0.7s linear infinite;
+            /* Safari */
+            animation: spin 0.57s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
 
 
-    <header>
+    <header class="fixed w-full">
         <nav class="flex flex-row items-center gap-10 p-5 bg-gray-100">
             <div class="">
                 <a href="">
@@ -34,10 +73,15 @@
                 </a>
             </div>
             <div class="">
-                <div class="flex align-middle gap-2">
+                <div class="flex align-middle gap-2 relative">
                     <input value="javascript" id="searchField-Result"
                         class="border border-gray-300 w-80 p-2 rounded outline-none" type="text"
                         placeholder="Search by Book Name">
+
+                    <!-- loader -->
+                    <div id="loader" class="loader absolute">
+                    </div>
+
                     <button onclick="loadServerData()" class="text-2xl text-yellow-400"><i
                             class="fas fa-search"></i></button>
                 </div>
@@ -47,7 +91,8 @@
     </header>
     <!-- end header section -->
 
-    <main class="flex flex-col items-center">
+
+    <main class="flex flex-col items-center pt-20">
         <section class="w-11/12">
             <div style="display: none;" id="resultStatus" class="flex justify-end gap-5 text-gray-500">
                 <p>showing: <span id="totalShowing" class="text-yellow-500">00</span></p>
@@ -59,6 +104,7 @@
         <!-- end result status -->
 
         <section class="w-11/12 mt-10">
+
             <div style="display: grid; grid-template-columns: auto auto; row-gap: 30px; column-gap: 20px;"
                 id="searchResultContainer" class="">
 
