@@ -71,6 +71,7 @@ const setResultData = (serverData) => {
             image = `<img src="https://openlibrary.org/images/icons/avatar_book-sm.png" alt="">`
         }
 
+
         div.innerHTML = `
         <!-- single post div -->
         <div class="w-1/4 flex justify-center">
@@ -86,7 +87,7 @@ const setResultData = (serverData) => {
                     class="font-normal text-gray-800">${singleBook.publisher ? author_name(singleBook.publisher) : "Unknown author"}</span>
             </h3>
             <p class="text-gray-400 mt-4">First publish <span
-                    class="font-normal text-gray-800">${singleBook.publish_date ? singleBook.publish_date[0] : "not found"}</span></p>
+                    class="font-normal text-gray-800">${singleBook.publish_date ? firstPublishDate(singleBook) : "not found"}</span></p>
             <p class="text-gray-500"><span class="font-normal text-gray-800">${singleBook.edition_count ? singleBook.edition_count : "no found"}</span> edition in one
                 <span class="font-normal text-gray-800">${singleBook.language ? singleBook.language.length : "1"}</span> languages
             </p>
@@ -121,6 +122,15 @@ const loader = loadingStatus => {
     else {
         loaderElement.style.display = 'none';
     }
+}
+
+const firstPublishDate = (singleBook) => {
+    let firstPublishDate = '';
+    for (const firstPublish of singleBook.publish_date) {
+        // it will be select array last child there first publish date
+        firstPublishDate = firstPublish;
+    }
+    return firstPublishDate;
 }
 
 //manage display or not
