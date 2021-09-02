@@ -2,6 +2,7 @@ const searchFieldResult = document.getElementById('searchField-Result');
 const resultStatus = document.getElementById('resultStatus');
 const searchResultContainer = document.getElementById('searchResultContainer')
 const clearText = document.getElementById('clearText');
+let searchFieldText = '';
 
 //load server data function
 const loadServerData = () => {
@@ -10,7 +11,7 @@ const loadServerData = () => {
     displayOrNot('resultStatus', 'none');
 
     const invalidSearchTextResult = document.getElementById('invalidSearchTextResult');
-    const searchFieldText = searchFieldResult.value;
+    searchFieldText = searchFieldResult.value;
 
     if (searchFieldText) {
         //get search data from server
@@ -18,8 +19,6 @@ const loadServerData = () => {
             .then(res => res.json())
             .then(data => {
                 showData(data);
-                console.log(data)
-
             })
     }
     else {
@@ -35,8 +34,6 @@ searchFieldResult.addEventListener('keyup', () => {
     invalidSearchTextResult.innerText = '';
     // loader('stop');
 })
-
-
 
 const showData = serverData => {
     //some inportant manageing
@@ -105,7 +102,7 @@ const author_name = (names) => {
     let author_name = ''
     for (const name of names) {
         //fixed 5 showing publisher
-        if (name === names[5]) {
+        if (name === names[4]) {
             author_name += name + `<span style='color: green;'>...more ${names.length - 5}</span>`;
             return author_name;
         }
@@ -136,17 +133,32 @@ const displayOrNot = (propertyId, displayValue = 'block') => {
     }
 }
 
-
-
-//input field text clear
-searchFieldResult.addEventListener('mouseenter', () => {
-    clearText.style = 'display: block; color: black'
+//input field text clear by close button
+let inputText = ''
+searchFieldResult.addEventListener('keyup', (event) => {
+    inputText = event.target.value;
+    mouseEnterCloseBtn()
 })
+searchFieldResult.addEventListener('mouseenter', () => {
+    mouseEnterCloseBtn()
+})
+const mouseEnterCloseBtn = () => {
+    if (searchFieldText === '' && inputText === '') {
+        clearText.style = 'display: none;'
+    } else {
+        clearText.style = 'display: block; color: black'
+    }
+    return;
+}
 clearText.addEventListener('mouseenter', () => {
+    clearText.style = 'display: block; color:red'
+})
+document.getElementById('loader').addEventListener('mouseenter', () => {
     clearText.style = 'display: block; color:red'
 })
 clearText.addEventListener('click', () => {
     searchFieldResult.value = "";
+    searchFieldResult.focus()
 })
 searchFieldResult.addEventListener('mouseleave', () => {
     clearText.style.display = 'none'
