@@ -127,7 +127,7 @@ const loader = loadingStatus => {
 const firstPublishDate = (singleBook) => {
     let firstPublishDate = '';
     for (const firstPublish of singleBook.publish_date) {
-        // it will be select array last child there first publish date
+        // it will be select array last child there first publisher date
         firstPublishDate = firstPublish;
     }
     return firstPublishDate;
@@ -146,6 +146,9 @@ const displayOrNot = (propertyId, displayValue = 'block') => {
 //input field text clear by close button
 let inputText = ''
 searchFieldResult.addEventListener('keyup', (event) => {
+    if (event.keyCode === 13) {
+        loadServerData();
+    }
     inputText = event.target.value;
     mouseEnterCloseBtn()
 })
